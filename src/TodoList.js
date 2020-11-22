@@ -30,7 +30,7 @@ const TodoList = ({ todos }) => {
                 </Grid>
               </Grid>
               <Typography variant="body2">{todo.due}</Typography>
-              <ButtonGroup
+              {/* <ButtonGroup
                 color="primary"
                 style={{ paddingTop: "12px" }}
                 variant="text"
@@ -45,7 +45,7 @@ const TodoList = ({ todos }) => {
                 <IconButton>
                   <DoneIcon size="small" />
                 </IconButton>
-              </ButtonGroup>
+              </ButtonGroup> */}
             </Paper>
           </Grid>
         ))}

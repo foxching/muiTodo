@@ -17,9 +17,9 @@ const Header = ({ handleClickOpen }) => {
       </Grid>
       <Grid item>
         <Fab
-          color="primary"
+          style={{ backgroundColor: "#009688", color: "#ffffff" }}
           aria-label="add"
-          size="small"
+          size="medium"
           onClick={handleClickOpen}
         >
           <AddIcon />

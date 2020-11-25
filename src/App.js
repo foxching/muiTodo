@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { DragDropContext } from "react-beautiful-dnd";
 import Chip from "@material-ui/core/Chip";
 import Container from "@material-ui/core/Container";
 import Zoom from "@material-ui/core/Zoom";
@@ -19,6 +20,7 @@ export default function App() {
   const [editedTodo, setEditedTodo] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [priorityFilter, setPriorityFilter] = useState("");
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -74,9 +76,21 @@ export default function App() {
     setPriorityFilter("");
   };
 
+  const onDragEnd = (result) => {
+    const { source, destination, draggableId } = result;
+    if (!destination) return;
+    if (destination.index === source.index) return;
+    const t = todos.filter((todo) => todo.id === draggableId)[0];
+    const newTodos = [...todos];
+    newTodos.splice(source.index, 1);
+    newTodos.splice(destination.index, 0, t);
+    setTodos(newTodos);
+  };
+
   useEffect(() => {
     setFilteredTodos(todos.filter((todo) => todo.priority === priorityFilter));
   }, [todos, priorityFilter]);
+
   return (
     <>
       <CssBaseline />
@@ -93,14 +107,16 @@ export default function App() {
             />
           </Zoom>
         )}
-        <TodoList
-          todos={priorityFilter === "" ? todos : filteredTodos}
-          deleteTodo={deleteTodo}
-          handleEdit={handleEdit}
-          markComplete={markComplete}
-          handlePriorityClick={handlePriorityClick}
-          checked={checked}
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <TodoList
+            todos={priorityFilter === "" ? todos : filteredTodos}
+            deleteTodo={deleteTodo}
+            handleEdit={handleEdit}
+            markComplete={markComplete}
+            handlePriorityClick={handlePriorityClick}
+            checked={checked}
+          />
+        </DragDropContext>
       </Container>
       <FormDialog
         open={open}

@@ -37,7 +37,7 @@ export default function App() {
 
   const deleteTodo = (todoId) => {
     setChecked(false);
-    setTodos([...todos.filter((todo) => todo.id !== todoId)]);
+    setTodos([...todos.filter((t) => t.id !== todoId)]);
   };
 
   const handleEdit = (todo) => {
@@ -78,6 +78,7 @@ export default function App() {
 
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
+    console.log(result);
     if (!destination) return;
     if (destination.index === source.index) return;
     const t = todos.filter((todo) => todo.id === draggableId)[0];
@@ -110,6 +111,7 @@ export default function App() {
         <DragDropContext onDragEnd={onDragEnd}>
           <TodoList
             todos={priorityFilter === "" ? todos : filteredTodos}
+            priorityFilter={priorityFilter}
             deleteTodo={deleteTodo}
             handleEdit={handleEdit}
             markComplete={markComplete}

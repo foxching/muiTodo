@@ -50,85 +50,72 @@ const TodoList = ({
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            <TransitionGroup>
-              {todos.map((todo, i) => (
-                <Draggable key={todo.id} draggableId={todo.id} index={i}>
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <CSSTransition timeout={500} classNames="fade">
-                        <Grid item style={{ margin: "1.5rem" }}>
-                          <Paper style={{ padding: "0.8rem" }} elevation={3}>
-                            <Grid
-                              container
-                              justify="space-between"
-                              alignItems="center"
-                            >
-                              <Grid>
-                                <Typography
-                                  variant="h6"
-                                  style={{
-                                    textDecoration: todo.completed
-                                      ? "line-through"
-                                      : "none"
-                                  }}
-                                >
-                                  {todo.todoText}
-                                </Typography>
-                              </Grid>
-                              <Grid>
-                                <Chip
-                                  size="small"
-                                  style={{
-                                    color: "#ffffff",
-                                    backgroundColor: getChipColor(todo.priority)
-                                  }}
-                                  label={todo.priority}
-                                  onClick={() =>
-                                    handlePriorityClick(todo.priority)
-                                  }
-                                />
-                              </Grid>
-                            </Grid>
-                            <Typography variant="body2">
-                              {todo.dueDate}
-                            </Typography>
-                            <ButtonGroup
-                              color="primary"
-                              style={{ paddingTop: "12px" }}
-                              variant="text"
-                              size="small"
-                            >
-                              <Button onClick={() => deleteTodo(todo.id)}>
-                                <DeleteIcon
-                                  size="small"
-                                  style={{ color: "#424242" }}
-                                />
-                              </Button>
-                              <Button onClick={() => handleEdit(todo)}>
-                                <EditIcon
-                                  size="small"
-                                  style={{ color: "#424242" }}
-                                />
-                              </Button>
-                              <Button onClick={() => markComplete(todo.id)}>
-                                <DoneIcon
-                                  size="small"
-                                  style={{ color: "#424242" }}
-                                />
-                              </Button>
-                            </ButtonGroup>
-                          </Paper>
+            {todos.map((todo, i) => (
+              <Draggable key={todo.id} draggableId={todo.id} index={i}>
+                {(provided) => (
+                  <Grid
+                    item
+                    style={{ margin: "1.5rem" }}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Paper style={{ padding: "0.8rem" }} elevation={3}>
+                      <Grid
+                        container
+                        justify="space-between"
+                        alignItems="center"
+                      >
+                        <Grid>
+                          <Typography
+                            variant="h6"
+                            style={{
+                              textDecoration: todo.completed
+                                ? "line-through"
+                                : "none"
+                            }}
+                          >
+                            {todo.todoText}
+                          </Typography>
                         </Grid>
-                      </CSSTransition>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-            </TransitionGroup>
+                        <Grid>
+                          <Chip
+                            size="small"
+                            style={{
+                              color: "#ffffff",
+                              backgroundColor: getChipColor(todo.priority)
+                            }}
+                            label={todo.priority}
+                            onClick={() => handlePriorityClick(todo.priority)}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Typography variant="body2">{todo.dueDate}</Typography>
+                      <ButtonGroup
+                        color="primary"
+                        style={{ paddingTop: "12px" }}
+                        variant="text"
+                        size="small"
+                      >
+                        <Button onClick={() => deleteTodo(todo.id)}>
+                          <DeleteIcon
+                            size="small"
+                            style={{ color: "#424242" }}
+                          />
+                        </Button>
+                        <Button onClick={() => handleEdit(todo)}>
+                          <EditIcon size="small" style={{ color: "#424242" }} />
+                        </Button>
+                        <Button onClick={() => markComplete(todo.id)}>
+                          <DoneIcon size="small" style={{ color: "#424242" }} />
+                        </Button>
+                      </ButtonGroup>
+                    </Paper>
+                  </Grid>
+                )}
+              </Draggable>
+            ))}
+
             {provided.placeholder}
           </Grid>
         )}

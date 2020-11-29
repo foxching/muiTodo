@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+//mui
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+//context
+import { TodoContext } from "../context/todoContext";
 
-const Header = ({ handleClickOpen }) => {
+const Header = () => {
+  const { setOpen } = useContext(TodoContext);
+
   return (
     <Grid
       container
@@ -20,7 +25,7 @@ const Header = ({ handleClickOpen }) => {
           style={{ backgroundColor: "#009688", color: "#ffffff" }}
           aria-label="add"
           size="medium"
-          onClick={handleClickOpen}
+          onClick={() => setOpen(true)}
         >
           <AddIcon />
         </Fab>

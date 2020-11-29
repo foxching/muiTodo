@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { v4 as uuidv4 } from "uuid";
+//mui
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
@@ -7,24 +11,25 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { v4 as uuidv4 } from "uuid";
 
-const FormComponent = ({
-  addTodo,
-  setOpen,
-  handleClose,
-  editedTodo,
-  // isEdit,
-  // setIsEdit,
-  editTodo
-}) => {
+//context
+import { TodoContext } from "../context/todoContext";
+
+const FormComponent = () => {
+  const {
+    handleAddTodo,
+    handleCloseDialog,
+    editedTodo,
+    handleEditTodo
+  } = useContext(TodoContext);
+
+  //date format
   const getCurrentDate = () => {
     const now = new Date();
     return now.toISOString().slice(0, 10);
   };
 
+  //form default values
   const initialValues = {
     todoText: "",
     priority: "",
@@ -32,6 +37,7 @@ const FormComponent = ({
     dueDate: getCurrentDate()
   };
 
+  //validation with YUP
   const validationSchema = Yup.object({
     todoText: Yup.string()
       .required("Please fill a value")
@@ -45,11 +51,11 @@ const FormComponent = ({
       id: uuidv4()
     };
     if (editedTodo !== null) {
-      editTodo(values);
+      handleEditTodo(values);
     } else {
-      addTodo(newTodo);
+      handleAddTodo(newTodo);
     }
-    handleClose();
+    handleCloseDialog();
   };
 
   return (
@@ -121,7 +127,7 @@ const FormComponent = ({
                 <Button color="primary" type="submit" disabled={!isValid}>
                   {editedTodo !== null ? "Update" : "Add"}
                 </Button>
-                <Button color="primary" onClick={handleClose}>
+                <Button color="primary" onClick={handleCloseDialog}>
                   Cancel
                 </Button>
               </Grid>

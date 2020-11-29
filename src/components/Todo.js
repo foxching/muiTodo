@@ -1,25 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Draggable } from "react-beautiful-dnd";
+//mui
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import Paper from "@material-ui/core/Paper";
-
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
+//mui icons
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
-import { Draggable } from "react-beautiful-dnd";
 
-const Todo = ({
-  todo,
-  index,
-  deleteTodo,
-  handlePriorityClick,
-  handleEdit,
-  markComplete,
-  getChipColor
-}) => {
+//context
+import { TodoContext } from "../context/todoContext";
+
+const Todo = ({ todo, index }) => {
+  const getChipColor = (priority) => {
+    let color = "";
+    switch (priority) {
+      case "High":
+        color = "#d50000";
+        break;
+      case "Med":
+        color = "#ffc107";
+        break;
+      case "Low":
+        color = "#009688";
+        break;
+      default:
+        color = "#ddddd";
+    }
+    return color;
+  };
+
+  const {
+    handleSetPriorityClick,
+    handleDeleteTodo,
+    handleEditClick,
+    handleMarkCompletedTodo
+  } = useContext(TodoContext);
+
   return (
     <Draggable key={todo.id} draggableId={todo.id} index={index}>
       {(provided) => (
@@ -50,7 +71,7 @@ const Todo = ({
                     backgroundColor: getChipColor(todo.priority)
                   }}
                   label={todo.priority}
-                  onClick={() => handlePriorityClick(todo.priority)}
+                  onClick={() => handleSetPriorityClick(todo.priority)}
                 />
               </Grid>
             </Grid>
@@ -61,13 +82,13 @@ const Todo = ({
               variant="text"
               size="small"
             >
-              <Button onClick={() => deleteTodo(todo.id)}>
+              <Button onClick={() => handleDeleteTodo(todo.id)}>
                 <DeleteIcon size="small" style={{ color: "#424242" }} />
               </Button>
-              <Button onClick={() => handleEdit(todo)}>
+              <Button onClick={() => handleEditClick(todo)}>
                 <EditIcon size="small" style={{ color: "#424242" }} />
               </Button>
-              <Button onClick={() => markComplete(todo.id)}>
+              <Button onClick={() => handleMarkCompletedTodo(todo.id)}>
                 <DoneIcon size="small" style={{ color: "#424242" }} />
               </Button>
             </ButtonGroup>

@@ -8,6 +8,7 @@ const TodoContextProvider = (props) => {
   const [open, setOpen] = useState(false);
   const [editedTodo, setEditedTodo] = useState(null);
   const [priorityFilter, setPriorityFilter] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState("light");
 
   const handleCloseDialog = () => {
     setOpen(false);
@@ -77,6 +78,8 @@ const TodoContextProvider = (props) => {
         open,
         setOpen,
         editedTodo,
+        isDarkMode,
+        setIsDarkMode,
         priorityFilter,
         setPriorityFilter,
         handleCloseDialog,

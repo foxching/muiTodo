@@ -77,19 +77,19 @@ const Todo = ({ todo, index }) => {
             </Grid>
             <Typography variant="body2">{todo.dueDate}</Typography>
             <ButtonGroup
-              color="primary"
+              color="secondary"
               style={{ paddingTop: "12px" }}
               variant="text"
               size="small"
             >
               <Button onClick={() => handleDeleteTodo(todo.id)}>
-                <DeleteIcon size="small" style={{ color: "#424242" }} />
+                <DeleteIcon size="small" color="secondary" />
               </Button>
               <Button onClick={() => handleEditClick(todo)}>
-                <EditIcon size="small" style={{ color: "#424242" }} />
+                <EditIcon size="small" color="secondary" />
               </Button>
               <Button onClick={() => handleMarkCompletedTodo(todo.id)}>
-                <DoneIcon size="small" style={{ color: "#424242" }} />
+                <DoneIcon size="small" color="secondary" />
               </Button>
             </ButtonGroup>
           </Paper>
